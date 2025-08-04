@@ -9,10 +9,12 @@
 ## 🧩 Presentación del problema
 
 Nos enfrentamos a un servidor remoto que ejecuta una "lotería" donde, si adivinás el número secreto generado por el servidor, te entregan la flag. El código fuente del servidor es el siguiente:
+
 ![Letra](./letraMisc.jpg)
 
 
 📌 Resumen
+
 El servidor genera un número aleatorio utilizando random.Random(), pero lo siembra (seed) con int(time.time()), lo cual lo hace predecible si el cliente conoce (o sincroniza con) la hora del servidor.
 
 Al conectarnos, el servidor envía el siguiente mensaje:
@@ -20,6 +22,7 @@ Can you guess the number to win the flag lottery?
 
 🧠 Paso a paso del proceso
 🔎 Intento inicial
+
 Al revisar el código fuente, notamos que el número a adivinar se genera así:
 
 secret.seed(int(time.time()))
@@ -28,6 +31,7 @@ Esto nos dio la pista de que podíamos replicar localmente el número si utiliz�
 Hicimos un script que generaba un número usando random.Random() con time.time() y lo enviaba al servidor.
 
 🚧 Problemas enfrentados
+
 El número generado localmente nunca coincidía con el del servidor. Después de revisar el código varias veces, descubrimos que el problema era la desincronización del reloj entre nuestra máquina y el servidor.
 
 Para verificar esto, usamos en la terminal de linux:
@@ -41,6 +45,7 @@ Resultado:
 💥 Esto mostró que nuestro reloj estaba adelantado 7.14 segundos, lo que hacía que nuestras seeds no coincidieran con las del servidor.
 
 🛠 Solución del problema
+
 Sincronizamos el reloj de forma manual:
 
 sudo ntpdate pool.ntp.org

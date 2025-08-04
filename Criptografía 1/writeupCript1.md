@@ -6,6 +6,7 @@
 
 Se proporciona un archivo: `my_magic_bytes.jpg.enc`  
 Sabemos que es un archivo JPG cifrado con una clave XOR repetitiva.
+
 ![Archivo descargado](./archivofuenteCript1.jpg)
 
 ---
@@ -47,6 +48,7 @@ Al aplicarlo a bytes (8 bits), se hace bit a bit.
 Una propiedad clave del XOR es que es reversible:
 
 Cifrado: TextoOriginal ⊕ Clave = TextoCifrado
+
 Descifrado: TextoCifrado ⊕ Clave = TextoOriginal
 
 Por lo tanto, si tenemos el texto cifrado y el texto original en alguna parte (por ejemplo, los bytes mágicos), podemos obtener la clave:
@@ -67,15 +69,18 @@ xxd -p -l 12 imagencualquiera.jpg
 Resultado (original): ffd8ffe000104a4649460001
 
 🧪 Script de solución en Python
+
 ![Script de Python](./cript1.jpg)
 
 
 📸 Resultado
+
 Se recuperó exitosamente la imagen como my_magic_bytes_decrypted.jpg.
 
 ✅ El archivo tiene un encabezado JPG válido (FF D8 FF E0), confirmando que el descifrado fue exitoso.
 
 🧠 Resumen
+
 El XOR es una operación reversible que nos permite recuperar el texto original si conocemos la clave.
 
 Usamos los bytes mágicos del JPG porque son fijos y conocidos, lo que nos permite deducir la clave.
@@ -83,4 +88,5 @@ Usamos los bytes mágicos del JPG porque son fijos y conocidos, lo que nos permi
 Con la clave deducida, podemos descifrar todo el archivo cifrado.
 
 Este tipo de cifrado con clave repetitiva es inseguro si partes del contenido original son conocidas.
+
 ![Resultado](./cript1Flag.jpg)
